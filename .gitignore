@@ -1,0 +1,6 @@
+*.png
+*~
+*.RData
+clean-data/*.bz2
+cache/*.bz2
+
