@@ -201,7 +201,7 @@ agerates <- local({
   ##Replace the string NA with the real NA
   ages[ages$AgeGroup == "NA",]$AgeGroup <- NA
   write.csv(ages,
-            file = bzfile("clean-data/homicides-agegroup-sex1990-2010.csv.bz"),
+            file = bzfile("clean-data/homicides-agegroup-sex1990-2010.csv.bz2"),
             row.names = FALSE)
 
   ##Check that the sums make sense
