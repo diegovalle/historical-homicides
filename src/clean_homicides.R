@@ -22,10 +22,11 @@ hom[ ,col2cvt] <- lapply(hom[ ,col2cvt],
 hom$Tot <- apply(hom[ , col2cvt], 1, sum, na.rm = TRUE)
 hom <- hom[ , c(1:3, ncol(hom))]
 names(hom) <- c("Year", "Code", "MunName", "Homicides")
-hom[hom$id == 14125,]
-hom[hom$id == 23009,]
+head(hom)
 
 
+
+#Read the data by date of occurance after 1994
 CleanHom1994 <- function(filename, skip, n) {
   hom <- read.csv(filename, skip = skip, fileEncoding = "windows-1252")
   head(hom)
@@ -48,7 +49,7 @@ CleanHom1994 <- function(filename, skip, n) {
 hom.male <- CleanHom1994("data/1994male.csv.bz2", 5, 2)
 hom.female <- CleanHom1994("data/1994female.csv.bz2", 5, 2)
 
-
+#Read the data from 1990-1994 by date of registry
 hom90 <- read.csv("data/1990male-female.csv.bz2", skip = 4, fileEncoding = "windows-1252")
 head(hom90)
 hom90 <- melt(hom90, id = c("X", "X.1", "X.2"))
@@ -75,6 +76,9 @@ hom$Code <- gsub("([0-9]+)$", " \\1", hom$Code)
 hom$CVE_ENT <- str_sub(hom$Code, 2, 3)
 hom$CVE_MUN <- str_sub(hom$Code, 5, 7)
 
+
+
+
 hom[is.na(hom$Homicides),]$Homicides <- 0
 hom[is.na(hom$Female),]$Female <- 0
 hom[is.na(hom$Male),]$Male <- 0
@@ -88,19 +92,46 @@ hom$id <- as.numeric(str_c(hom$CVE_ENT, hom$CVE_MUN))
 hom$CVE_ENT <- NULL
 hom$CVE_MUN <- NULL
 
-hom <- subset(hom, id > 999)
+hom <- na.omit(hom)
+
+
+
+
+##Merge Tulum with Solidaridad
+hom[which(hom$id == 23009),]
+hom[which(hom$id == 14125),]
+
+hom[which(hom$id == 14125),]$id <- 14008
+hom[which(hom$id == 23009),]$id <- 23008
+
+newmuns <- subset(hom, id %in% c(14008, 23008))
+newmuns <- ddply(newmuns, .(id, Year),
+                 summarise, TotalHom = sum(TotalHom),
+                 MaleHom = sum(MaleHom),
+                 FemaleHom = sum(FemaleHom))
+hom <- subset(hom, !id %in% c(14008, 23008))
+hom <- rbind(hom, newmuns)
+
+hom[which(hom$id == 23009),]
+hom[which(hom$id == 14125),]
+
+hom <- subset(hom, id > 33)
 
 mh <- read.csv("data/municipality-heads.csv")
 
-hom2 <- data.frame(id = rep(mh$id, each = length(1990:2010)),
-                   MunName = rep(mh$MunName, each = length(1990:2010)),
-                   Year = 1990:2010
-                   )
+hom2 <- expand.grid(id = mh$id, Year = 1990:2010)
+hom2 <- merge(hom2, mh[,c("id", "MunName")])
 hom <- merge(hom, hom2, by = c("id", "Year"),
-             all.y = TRUE)
-hom[is.na(hom)] <- 0
-hom <- hom[order(hom$id, hom$Year),]
+             all = TRUE)
 
+hom <- subset(hom, id %% 1000 != 999)
+hom[is.na(hom$MunName),]
+
+
+hom <- hom[order(hom$id, hom$Year),]
+hom[is.na(hom$TotalHom),]$TotalHom <- 0
+hom[is.na(hom$FemaleHom),]$FemaleHom <- 0
+hom[is.na(hom$MaleHom),]$MaleHom <- 0
 
 hom[which(hom$id == 23009),]
 hom[which(hom$id == 14125),]

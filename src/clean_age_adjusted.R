@@ -1,3 +1,10 @@
+########################################################
+# Author: Diego Valle-Jones
+# Website: www.diegovalle.net
+# Date Created: Mon Dec 26 16:49:22 2011
+# Email: diegovalle at gmail.com
+# Purpose: Clean the homicide data with age groups
+# Copyright (c) Diego Valle-Jones. All rights reserved
 
 
 
