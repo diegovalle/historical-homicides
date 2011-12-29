@@ -1,16 +1,16 @@
 Clean Historical Homicides
 ---------------------------
 
-Clean homicide files from the INEGI from 1990 to 2010. Because of the cutoff date for registering the files, homicides for the last year are undercounted by about 4%. Before 1994 homicides are recorded by age of registration since lots of homicides were registered without a date of occurence
+Clean homicide files from the INEGI from 1990 to 2010. Because of the cutoff date for registering the files, homicides for the last year are under-counted by about 4%. Before 1994 homicides are recorded by age of registration since lots of homicides were registered without a date of occurrence
 
 
 Notes
 =====
 
-* Because of the cutoff date of December 31 2010 for registering homicides, the number of homicides in 2010 is undercounted by about 4%
+* Because of the cutoff date of December 31 2010 for registering homicides, the number of homicides in 2010 is under-counted by about 4%
 * The data does not include homicides registered without a municipality of occurrence (about 10-30 each year)
 * The data were adjusted to match the municipalities as they existed during 2007 (San Ignacio Cerro Gordo was merged with Arandas, and Tulum with Solidaridad)
-* Since there were a lot of homicides registered without a year of occurance before 1994 I decided to use the date of registration as a proxy for year of occurance from 1990 to 1993
+* Since there were a lot of homicides registered without a year of occurrence before 1994 I decided to use the date of registration as a proxy for year of occurrence from 1990 to 1993
 
 Sources
 =======
