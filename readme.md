@@ -1,7 +1,7 @@
 Clean Historical Homicides
 ---------------------------
 
-Clean homicide files from the INEGI from 1990 to 2010. Because of the cutoff date for registering the files, homicides for the last year are under-counted by about 4%. Before 1994 homicides are recorded by age of registration since lots of homicides were registered without a date of occurrence
+Clean homicide files from the INEGI from 1990 to 2010. Files with the clean data will be created in the clean-data directory.
 
 
 Notes
